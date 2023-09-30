@@ -15,3 +15,9 @@
 7. А/В тестирование  
 8. событийная аналитика  
 9. построение дашбордов  
+
+## Инструменты:
+
+1. Pyton: Pandas, Matplotlib, NumPy, SciPy, Seaborn, Plotly
+2. SQL, PostegreSQL
+3. Tableau
