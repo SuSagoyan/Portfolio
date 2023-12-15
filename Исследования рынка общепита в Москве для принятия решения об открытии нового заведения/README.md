@@ -6,7 +6,7 @@
 
 ## Навыки и инструменты
 
-pyton, pandas, seaborn, plotly, визуализация данных
+python, pandas, seaborn, plotly, визуализация данных
 
 ## Вывод
 
