@@ -1,0 +1,36 @@
+1.  SELECT 
+    t.Client_id,
+    t.Report_date AS Transaction_date,
+    t.Txn_amount * r.CCy_rate AS Amount_in_USD
+FROM 
+    Transactions t
+JOIN 
+    (SELECT 
+         t1.Report_date,
+         MAX(r1.Report_date) AS Max_Working_Day 
+     FROM 
+         Transactions t1
+     JOIN 
+         Rates r1 ON t1.Report_date = r1.Report_date
+     WHERE 
+         WEEKDAY(t1.Report_date) < 5
+     GROUP BY 
+         t1.Report_date) AS max_dates ON t.Report_date = max_dates.Report_date
+JOIN 
+    Rates r ON max_dates.Max_Working_Day = r.Report_date
+WHERE 
+    r.Ccy_code = 840;
+
+
+
+2.  SELECT 
+    Client_id,
+    DATE_FORMAT(Report_date, '%Y-%m') AS Report_date,
+    SUM(CASE WHEN Txn_type = 'debit' THEN Txn_amount ELSE 0 END) / 
+    SUM(CASE WHEN Txn_type = 'debit' THEN Txn_amount ELSE 0 END + 
+        CASE WHEN Txn_type = 'credit' THEN Txn_amount ELSE 0 END) AS Ratio
+FROM 
+    VSP_oper_data
+GROUP BY 
+    Client_id,
+    DATE_FORMAT(Report_date, '%Y-%m');
